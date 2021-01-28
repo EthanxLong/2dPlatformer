@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/Actors/Enemy.gd" type="Script" id=1]
+[ext_resource path="res://assets/enemy.png" type="Texture" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 48, 39 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 40, 8 )
+
+[node name="Enemy" type="KinematicBody2D"]
+collision_layer = 2
+collision_mask = 2147483656
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_vertical_guides_": [ -176.0 ]
+}
+
+[node name="enemy" type="Sprite" parent="."]
+position = Vector2( 0, -48 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -40 )
+shape = SubResource( 1 )
+
+[node name="VisibilityEnabler2D" type="VisibilityEnabler2D" parent="."]
+position = Vector2( -1.66893e-06, -11.1667 )
+scale = Vector2( 0.96, 1.21667 )
+rect = Rect2( -50, -50, 100, 60 )
+process_parent = true
+physics_process_parent = true
+
+[node name="StompDetector" type="Area2D" parent="."]
+modulate = Color( 0.0588235, 0.215686, 0.901961, 1 )
+position = Vector2( 0, 1 )
+monitorable = false
+collision_layer = 0
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StompDetector"]
+position = Vector2( 0, -89 )
+shape = SubResource( 2 )
+[connection signal="body_entered" from="StompDetector" to="." method="_on_StompDetector_body_entered"]
